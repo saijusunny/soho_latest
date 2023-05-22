@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+  <div class="row">
+    <div class="col-sm-12 " >
+      <h1>
+        BANKING
+      </h1>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12" style="text-align: right;">
+      <a class="btn btn-success mr-2" href="{% url 'additem' %}" ><i class="fa-solid fa-plus "></i>New</a>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-responsive  ">
+        <thead>
+          <tr>
+            <th class="text-light">Account Details</th>
+            <th class="text-light">Account Type</th>
+            <th class="text-light">Amount</th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in view %}
+ 
+          <tr>
+ 
+           <td onclick="location.href ='{% url 'detail' v.id %}' " class="text-light"> {{v.Name}}</td>
+            <td class="text-light">{{v.s_desc}}</td>
+            <td class="text-light">{{v.s_price}}</td>
+
+           
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  
+ 
+{% endblock %}
