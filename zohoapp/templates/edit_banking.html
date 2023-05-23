@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<form action="{% url 'save_banking'%}" method="POST">
+<form action="{% url 'save_edit_bnk' bnk.id%}" method="POST">
 {% csrf_token %}
 
     <div class="row mt-5">
@@ -18,7 +18,7 @@
                     <label for="">Name</label>
                 </div>
                 <div class="col-sm-8">
-                    <input type="text" name="main_name" class="form-control bg-light text-dark"> 
+                    <input type="text" value="{{bnk.name}}"  name="main_name" class="form-control bg-light text-dark" > 
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                     <label for="">Alias</label>
                 </div>
                 <div class="col-sm-8">
-                    <input type="text" name="main_alias" class="form-control bg-light text-dark"> 
+                    <input type="text" value="{{bnk.alias}}"  name="main_alias" class="form-control bg-light text-dark"> 
                 </div>
             </div>
 
@@ -47,9 +47,18 @@
                     <label for="">Select Account Type</label>
                 </div>
                 <div class="col-sm-8">
-                    <input type="radio" name="main_type" value="Bank">
+                    {% if bnk.acc_type == "Bank"%}
+                        <input type="radio" name="main_type" value="Bank" checked >
+                    {%else%}
+                        <input type="radio" name="main_type" value="Bank" >
+                    {%endif%}
                     <label for="">Bank</label> &nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="main_type" value="Credit Card">
+                    {% if bnk.acc_type == "Credit Card"%}
+                        <input type="radio" name="main_type" value="Credit Card" checked >
+                    {%else%}
+                        <input type="radio" name="main_type" value="Credit Card" >
+                    {%endif%}
+                    
                     <label for="">Credit Card</label>
                 </div>
             </div>
@@ -69,32 +78,33 @@
                     <label for="">A/c Holders Name</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="ac_holder" class="form-control bg-light text-dark" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.ac_holder}}"  name="ac_holder" class="form-control bg-light text-dark" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">A/c Number</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="ac_number" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.ac_no}}"  name="ac_number" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">IFSC Code</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="ifsc" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.ifsc}}"  name="ifsc" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Swift Code</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="sw_code" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.swift_code}}"  name="sw_code" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Bank Name</label>
                 </div>
                 <div class="col-sm-6 mt-4">
                     
-                    <select name="bnk_nm" id="" class="form-control bg-light text-dark">
+                    <select name="bnk_nm" id="" class="form-control bg-light text-dark" >
+                        <option value="{{bnk_name}}" selected>{{bnk_name}}</option> 
                         <option value="not applicable">Not applicable</option> 
                         
                     </select>
@@ -103,13 +113,14 @@
                     <label for="">Branch Name</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="br_name" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.bnk_branch}}"  name="br_name" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Set/Alter Range Of Cheque Books</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <select name="alter_chq" id="chqrng" class="form-control bg-light text-dark">
+                    <select name="alter_chq" id="chqrng" class="form-control bg-light text-dark" >
+                        <option value="{{bnk.chq_book}}" selected>{{bnk.chq_book}}</option>
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>  
                         
@@ -119,7 +130,8 @@
                     <label for="">Enable Cheque Printing</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <select name="en_chq" id="chqprnt" class="form-control bg-light text-dark">
+                    <select name="en_chq" id="chqprnt" class="form-control bg-light text-dark" >
+                        <option value="{{bnk.chq_print}}" selected>{{bnk.chq_print}}</option>
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>  
                         
@@ -130,7 +142,8 @@
                     <label for="">Set/Alter Cheque Printing Configuration</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <select name="chq_prnt" id="chqprnt" class="form-control bg-light text-dark">
+                    <select name="chq_prnt" id="chqprnt" class="form-control bg-light text-dark" >
+                        <option value="{{bnk.chq_config}}" selected>{{bnk.chq_config}}</option>
                         <option value="No">No</option>
                         <option value="Yes">Yes</option>  
                         
@@ -152,14 +165,13 @@
                     <label for="">Name</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="name" class="form-control bg-light text-dark" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.mail_name}}"  name="name" class="form-control bg-light text-dark" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Address</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <textarea name="" id="" cols="30" rows="10" name="address" class="form-control bg-light text-dark"></textarea>
-                 
+                    <textarea name="" id="" cols="30" rows="10" name="address" class="form-control bg-light text-dark" >{{bnk.mail_addr}}</textarea>
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Country</label>
@@ -167,6 +179,7 @@
                 <div class="col-sm-6 mt-4">
                 
                     <select name="country" class="form-control bg-light text-dark">
+                        <option value="{{bnk.mail_country}}" selected>{{bnk.mail_country}}</option>
                         <option value=>Select Country</option>
                         <option value="Nigeria">Nigeria</option>
                         <option value="Afghanistan">Afghanistan</option>
@@ -423,14 +436,14 @@
                     <label for="">State</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="state" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.mail_state}}"  name="state" class="form-control bg-light text-dark">
                     
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Pin</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="pin" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.mail_pin}}"  name="pin" class="form-control bg-light text-dark">
                 </div>
                 
 
@@ -448,8 +461,8 @@
                     <label for="">Provide Bank Details</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                
-                    <input type="text"  disabled name="bnk_det" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.bd_bnk_det}}"  name="bnk_det" class="form-control bg-light text-dark">
+                    
                 </div>
                 <div class="row mt-4">
                     <div class="col-sm-12" style="text-align: center;">
@@ -460,14 +473,15 @@
                     <label for="">PAN/IT No.</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="pan" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.bd_pan_no}}"  name="pan" class="form-control bg-light text-dark">
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Registration Type</label>
                 </div>
                 <div class="col-sm-6 mt-4">
                 
-                    <select name="register_type" id="regtype" class="form-control bg-light text-dark">
+                    <select name="register_type" id="regtype" class="form-control bg-light text-dark" >
+                        <option value="{{bnk.bd_reg_typ}}" selected>{{bnk.bd_reg_typ}}</option>
                         <option value="Regular">Regular</option> 
                         <option value="Composition">Composition</option>
                         <option value="Consumer">Consumer</option>
@@ -480,14 +494,14 @@
                     <label for="">GSTIN/UN No.</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="gstin" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.bd_gst_no}}"  name="gstin" class="form-control bg-light text-dark">
                     
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Set/Alter GST Details</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <input type="text" name="gst_det" class="form-control bg-light text-dark">
+                    <input type="text" value="{{bnk.bd_gst_det}}"  name="gst_det" class="form-control bg-light text-dark">
                 </div>
                 
 
@@ -503,7 +517,7 @@
                             <label for="">Opening Balance: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input type="text" name="balance" class="form-control bg-light text-dark">
+                            <input type="text" value="{{bnk.opening_bal}}"  name="balance" class="form-control bg-light text-dark">
                         
                         </div>
 
@@ -519,7 +533,7 @@
 
     <div class="row mt-5">
         <div class="col-sm-12" style="text-align: center;">
-            <input type="submit" class="btn btn-success" value="Create">
+            <input type="submit" class="btn btn-success" value="Save">
         </div>
     </div>
 </form>

@@ -736,10 +736,87 @@ def retainer_delete(request,pk):
     retainer.delete()
     return redirect('retainer_invoice')
         
-def banking(request):
+def banking_home(request):
   
-    viewitem=AddItem.objects.all()
+    viewitem=banking.objects.filter(user=request.user)
     return render(request,'banking.html',{'view':viewitem})       
     
 def create_banking(request):
     return render(request,'create_banking.html')    
+
+def save_banking(request):
+    if request.method == "POST":
+        a=banking()
+        a.name = request.POST.get('main_name',None)
+        a.alias = request.POST.get('main_alias',None)
+        a.acc_type = request.POST.get('main_type',None)
+        a.ac_holder = request.POST.get('ac_holder',None)
+        a.ac_no = request.POST.get('ac_number',None)
+        a.ifsc = request.POST.get('ifsc',None)
+        a.swift_code = request.POST.get('sw_code',None)
+        a.bnk_name = request.POST.get('bnk_nm',None)
+        a.bnk_branch = request.POST.get('br_name',None)
+        a.chq_book = request.POST.get('alter_chq',None)
+        a.chq_print = request.POST.get('en_chq',None)
+        a.chq_config = request.POST.get('chq_prnt',None)
+        a.mail_name = request.POST.get('name',None)
+        a.mail_addr = request.POST.get('address',None)
+        a.mail_country = request.POST.get('country',None)
+        a.mail_state = request.POST.get('state',None)
+        a.mail_pin = request.POST.get('pin',None)
+        a.bd_bnk_det = request.POST.get('bnk_det',None)
+        a.bd_pan_no = request.POST.get('pan',None)
+        a.bd_reg_typ = request.POST.get('regtype',None)
+        a.bd_gst_no = request.POST.get('gstin',None)
+        a.bd_gst_det = request.POST.get('gst_det',None)
+        a.user=request.user
+        a.opening_bal = request.POST.get('balance',None)
+        a.save()
+        return redirect("banking_home")
+    return redirect("create_banking")
+
+def view_bank(request,id):
+    viewitem=banking.objects.filter(user=request.user)
+    bnk=banking.objects.get(id=id,user=request.user)
+    context={
+        'view':viewitem,
+        'bnk':bnk,
+    }
+    return render(request,"view_bank.html",context)
+
+def banking_edit(request,id):
+    bnk=banking.objects.get(id=id,user=request.user)
+    context={
+        'bnk':bnk,
+    }
+    return render(request,"edit_banking.html",context)
+
+def save_edit_bnk(request,id):
+    if request.method == "POST":
+        a=banking.objects.get(id=id,user=request.user)
+        a.name = request.POST.get('main_name',None)
+        a.alias = request.POST.get('main_alias',None)
+        a.acc_type = request.POST.get('main_type',None)
+        a.ac_holder = request.POST.get('ac_holder',None)
+        a.ac_no = request.POST.get('ac_number',None)
+        a.ifsc = request.POST.get('ifsc',None)
+        a.swift_code = request.POST.get('sw_code',None)
+        a.bnk_name = request.POST.get('bnk_nm',None)
+        a.bnk_branch = request.POST.get('br_name',None)
+        a.chq_book = request.POST.get('alter_chq',None)
+        a.chq_print = request.POST.get('en_chq',None)
+        a.chq_config = request.POST.get('chq_prnt',None)
+        a.mail_name = request.POST.get('name',None)
+        a.mail_addr = request.POST.get('address',None)
+        a.mail_country = request.POST.get('country',None)
+        a.mail_state = request.POST.get('state',None)
+        a.mail_pin = request.POST.get('pin',None)
+        a.bd_bnk_det = request.POST.get('bnk_det',None)
+        a.bd_pan_no = request.POST.get('pan',None)
+        a.bd_reg_typ = request.POST.get('regtype',None)
+        a.bd_gst_no = request.POST.get('gstin',None)
+        a.bd_gst_det = request.POST.get('gst_det',None)
+        a.opening_bal = request.POST.get('balance',None)
+        a.save()
+        return redirect("banking_home")
+    return redirect("create_banking")
