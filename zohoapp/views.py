@@ -742,7 +742,8 @@ def banking_home(request):
     return render(request,'banking.html',{'view':viewitem})       
     
 def create_banking(request):
-    return render(request,'create_banking.html')    
+    banks = bank.objects.filter(user=request.user, acc_type="bank")
+    return render(request,'create_banking.html',{"bank":banks})    
 
 def save_banking(request):
     if request.method == "POST":
@@ -766,7 +767,7 @@ def save_banking(request):
         a.mail_pin = request.POST.get('pin',None)
         a.bd_bnk_det = request.POST.get('bnk_det',None)
         a.bd_pan_no = request.POST.get('pan',None)
-        a.bd_reg_typ = request.POST.get('regtype',None)
+        a.bd_reg_typ = request.POST.get('register_type',None)
         a.bd_gst_no = request.POST.get('gstin',None)
         a.bd_gst_det = request.POST.get('gst_det',None)
         a.user=request.user
@@ -786,8 +787,10 @@ def view_bank(request,id):
 
 def banking_edit(request,id):
     bnk=banking.objects.get(id=id,user=request.user)
+    banks = bank.objects.filter(user=request.user, acc_type="bank")
     context={
         'bnk':bnk,
+        "bank":banks
     }
     return render(request,"edit_banking.html",context)
 
@@ -813,10 +816,30 @@ def save_edit_bnk(request,id):
         a.mail_pin = request.POST.get('pin',None)
         a.bd_bnk_det = request.POST.get('bnk_det',None)
         a.bd_pan_no = request.POST.get('pan',None)
-        a.bd_reg_typ = request.POST.get('regtype',None)
+        a.bd_reg_typ = request.POST.get('register_type',None)
         a.bd_gst_no = request.POST.get('gstin',None)
         a.bd_gst_det = request.POST.get('gst_det',None)
         a.opening_bal = request.POST.get('balance',None)
         a.save()
         return redirect("banking_home")
     return redirect("create_banking")
+
+def save_bank(request):
+    if request.method == "POST":
+        a=bank()
+        a.acc_type = request.POST.get('type',None)
+        a.bank_name = request.POST.get('bank',None)
+        a.user = request.user
+        a.save()
+        return redirect("create_banking")
+    return redirect("create_banking")
+def save_banking_edit(request,id):
+    if request.method == "POST":
+        a=bank()
+        a.acc_type = request.POST.get('type',None)
+        a.bank_name = request.POST.get('bank',None)
+        a.user = request.user
+        a.save()
+        return redirect("banking_edit", id)
+    return redirect("banking_edit", id)
+    

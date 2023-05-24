@@ -49,12 +49,15 @@ urlpatterns = [
     path('send_mail/<int:pk>',views.mail_send,name='mail_send'),
     path('retaineritem_delete/<int:pk>',views.retaineritem_delete,name='retaineritem_delete'),
     path('retainer_delete/<int:pk>',views.retainer_delete,name='retainer_delete'),
+    #saiju
     path('banking_home',views.banking_home,name='banking_home'),
     path('create_banking',views.create_banking,name='create_banking'),
     path('save_banking',views.save_banking,name='save_banking'),
     path('view_bank/<int:id>',views.view_bank,name='view_bank'),
     path('banking_edit/<int:id>',views.banking_edit,name='banking_edit'),
     path('save_edit_bnk/<int:id>',views.save_edit_bnk,name='save_edit_bnk'),
+    path('save_banking_edit/<int:id>',views.save_banking_edit,name='save_banking_edit'),
+    path('save_bank',views.save_bank,name='save_bank'),
     
     
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

@@ -162,3 +162,8 @@ class banking(models.Model):
     bd_gst_no = models.CharField(max_length=220,default='', null=True, blank=True)
     bd_gst_det = models.CharField(max_length=220,default='', null=True, blank=True)
     opening_bal =models.IntegerField(null=True, blank=True)
+
+class bank(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    acc_type = models.CharField(max_length=220,default='', null=True, blank=True)
+    bank_name = models.CharField(max_length=220,default='', null=True, blank=True)

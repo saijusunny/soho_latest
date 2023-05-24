@@ -96,8 +96,48 @@
                     
                     <select name="bnk_nm" id="" class="form-control bg-light text-dark">
                         <option value="not applicable">Not applicable</option> 
+                        <option value="ALLAHABAD BANK">ALLAHABAD BANK </option>
+                        <option value="ANDHRA BANK">ANDHRA BANK</option>
+                        <option value="AXIS BANK">AXIS BANK</option>
+                        <option value="STATE BANK OF INDIA">STATE BANK OF INDIA</option>
+                        <option value="BANK OF BARODA">BANK OF BARODA</option>
+                        <option value="UCO BANK">UCO BANK</option>
+                        <option value="UNION BANK OF INDIA">UNION BANK OF INDIA</option>
+                        <option value="BANK OF INDIA">BANK OF INDIA</option>
+                        <option value="BANDHAN BANK LIMITED">BANDHAN BANK LIMITED</option>
+                        <option value="CANARA BANK">CANARA BANK</option>
+                        <option value="GRAMIN VIKASH BANK">GRAMIN VIKASH BANK</option>
+                        <option value="CORPORATION BANK">CORPORATION BANK</option>
+                        <option value="INDIAN BANK">INDIAN BANK</option>
+                        <option value="INDIAN OVERSEAS BANK">INDIAN OVERSEAS BANK</option>
+                        <option value="ORIENTAL BANK OF COMMERCE">ORIENTAL BANK OF COMMERCE</option>
+                        <option value="PUNJAB AND SIND BANK">PUNJAB AND SIND BANK</option>
+                        <option value="PUNJAB NATIONAL BANK">PUNJAB NATIONAL BANK</option>
+                        <option value="RESERVE BANK OF INDIA">RESERVE BANK OF INDIA</option>
                         
+                        <option value="UNITED BANK OF INDIA">UNITED BANK OF INDIA</option>
+                        <option value="CENTRAL BANK OF INDIA">CENTRAL BANK OF INDIA</option>
+                        <option value="VIJAYA BANK">VIJAYA BANK</option>
+                        <option value="DENA BANK">DENA BANK</option>
+                        <option value="BHARATIYA MAHILA BANK LIMITED">BHARATIYA MAHILA BANK LIMITED</option>
+                        <option value="FEDERAL BANK LTD">FEDERAL BANK LTD </option>
+                        <option value="HDFC BANK LTD">HDFC BANK LTD</option>
+                        <option value="ICICI BANK LTD">ICICI BANK LTD</option>
+                        <option value="IDBI BANK LTD">IDBI BANK LTD</option>
+                        <option value="PAYTM BANK">PAYTM BANK</option>
+                        <option value="FINO PAYMENT BANK">FINO PAYMENT BANK</option>
+                        <option value="INDUSIND BANK LTD">INDUSIND BANK LTD</option>
+                        <option value="KARNATAKA BANK LTD">KARNATAKA BANK LTD</option>
+                        <option value="KOTAK MAHINDRA BANK">KOTAK MAHINDRA BANK</option>
+                        <option value="YES BANK LTD">YES BANK LTD</option>
+                        <option value="SYNDICATE BANK">SYNDICATE BANK</option>
+                        <option value="BANK OF INDIA">BANK OF INDIA</option>
+                        <option value="BANK OF MAHARASHTRA">BANK OF MAHARASHTRA</option>
+                        {% for bk in bank%}
+                        <option value="{{bk.bank_name}}">{{bk.bank_name}}</option>   
+                        {%endfor%}
                     </select>
+                    <a href="" data-toggle="modal" data-target="#descr"><div class="btn btn-light mt-1">+</div></a>
                 </div>
                 <div class="col-sm-6 mt-4">
                     <label for="">Branch Name</label>
@@ -158,7 +198,7 @@
                     <label for="">Address</label>
                 </div>
                 <div class="col-sm-6 mt-4">
-                    <textarea name="" id="" cols="30" rows="10" name="address" class="form-control bg-light text-dark"></textarea>
+                    <textarea  id="" cols="30" rows="10" name="address" class="form-control bg-light text-dark"></textarea>
                  
                 </div>
                 <div class="col-sm-6 mt-4">
@@ -449,7 +489,7 @@
                 </div>
                 <div class="col-sm-6 mt-4">
                 
-                    <input type="text"  disabled name="bnk_det" class="form-control bg-light text-dark">
+                    <input type="text" name="bnk_det" class="form-control bg-light text-dark">
                 </div>
                 <div class="row mt-4">
                     <div class="col-sm-12" style="text-align: center;">
@@ -519,8 +559,56 @@
 
     <div class="row mt-5">
         <div class="col-sm-12" style="text-align: center;">
-            <input type="submit" class="btn btn-success" value="Create">
+            <input type="submit" style="width: 200px; height: 50px;"  class="btn btn-success" value="Create">
         </div>
     </div>
+</form>
+
+<form action="{% url 'save_bank'%}" method="POST">
+{% csrf_token %}
+<div class="rowmt-5 modal " id="descr">
+    <div class="modal-dialog modal-md modal-dialog-centered "  role="document">
+      <div class="modal-content modal-md bg-dark" style="background-color: #191c24;">
+        <div class="card bg-dark">
+          <div class="card-body bg-dark">
+            
+              <button type="button" class="close text-light bg-dark" data-dismiss="modal" aria-label=""
+                style="background-color: #191c24;border:none; float: right; font-size: 20px;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="text-info bg-dark" style="font-size: 20px;font-weight: 600;" id="heads2">Create New Bank</div>
+              <div class="row mt-3">
+                <div class="col-sm-5" style="text-align: right;">
+                    <label for="">Account Type</label>
+                    
+                </div>
+                <div class="col-sm-2" style="text-align: center;">
+                    <label for="">:</label>
+             
+                </div>
+
+                <div class="col-sm-5">
+                    
+                    <input type="radio" name="type" value="bank" checked>
+                    <label for="">Bank</label>
+                </div>
+              </div>
+  
+              <div class="row mt-2 bg-dark">
+                <div class="col-sm-12" >
+                  <input type="text" class="form-control text-dark bg-light" name="bank" placeholder="Bank Name">
+                </div>
+                
+              </div>
+              <div class="row mt-2">
+                <div class="col-sm-12" style="text-align: center;">
+                    <input class="btn btn-success" style="width: 200px;" type="submit" value="Save">
+                </div>
+              </div>
+             
+          </div>
+        </div>
+    </div>
+  </div>
 </form>
 {% endblock %}
